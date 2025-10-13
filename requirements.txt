@@ -1,0 +1,9 @@
+streamlit
+torch
+torchvision
+faiss-cpu
+numpy
+pillow
+joblib
+tqdm
+requests
