@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Exclude general data files but keep our project data
+*.csv
+*.npy
+*.pkl
+*.faiss
+
+# Include the data directory and its contents specifically
+!data/
+!data/images/
+!data/images/**
+!data/*.csv
+!data/*.npy
+!data/*.pkl
+!data/*.faiss
+
+# Logs
+*.log

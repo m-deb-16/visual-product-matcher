@@ -272,7 +272,12 @@ if search_btn and query_image is not None:
                     with cols[j]:
                         with st.container():
                             st.markdown("<div class='product-card'>", unsafe_allow_html=True)
-                            st.image(r["image_path"], caption=None, width=200, use_container_width=False)
+                            # Load and display the image properly for Streamlit Cloud
+                            try:
+                                image = Image.open(r["image_path"])
+                                st.image(image, caption=None, width=200, use_container_width=False)
+                            except Exception as e:
+                                st.warning(f"⚠️ Could not load image: {os.path.basename(r['image_path'])}")
                             st.markdown(f"**{r['name']}**")
                             st.markdown(f"<span style='color: #4A5568; font-size: 0.9rem;'>{r['category']}</span>", unsafe_allow_html=True)
                             
