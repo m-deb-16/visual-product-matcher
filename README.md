@@ -74,7 +74,7 @@ python scripts/build_index_db.py
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/visual-product-matcher.git
+   git clone https://github.com/m-deb-16/visual-product-matcher.git
    cd visual-product-matcher
    ```
 
