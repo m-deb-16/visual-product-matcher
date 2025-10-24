@@ -10,44 +10,68 @@ Visual Product Matcher is an AI-powered application that helps users find visual
 - Visual similarity scoring with percentage matching
 - Multiple product categories support
 - Modern, responsive UI built with Streamlit
-- Easy deployment on Streamlit Cloud
+- Supabase PostgreSQL database with pgvector extension for similarity search
+- Easy deployment on Streamlit Cloud with remote database access
 
 ## How It Works
 
 1. Upload an image or provide an image URL
 2. The AI analyzes the visual features using a pre-trained ResNet50 model
-3. The FAISS search engine finds the most similar products in the database
+3. The PostgreSQL database with pgvector extension finds the most similar products
 4. Results are displayed with similarity scores and product information
 
 ## Technical Details
 
-- **Model**: ResNet50 (pre-trained on ImageNet)
-- **Search Engine**: FAISS (Facebook AI Similarity Search)
-- **Framework**: Streamlit + PyTorch
+- **Model**: Vision Transformer ViT (google/vit-base-patch16-224)
+- **Search Engine**: Supabase PostgreSQL with pgvector extension using HNSW index
+- **Framework**: Streamlit + PyTorch + Transformers + Supabase-py
 - **Features**: Image embedding, similarity search, visual interface
 
 ## Requirements
 
 - Python 3.8+
+- Supabase PostgreSQL with pgvector extension
 - Streamlit
 - PyTorch
-- FAISS
-- Pillow
-- NumPy
-- Joblib
+- Transformers
+- supabase-py
+- psycopg2-binary (for vector operations)
+- pgvector
+- python-dotenv
+- Other dependencies listed in requirements_db.txt
 
-## Deployment
+## Database Setup
 
-This application is designed for deployment on Streamlit Cloud. The required files and configurations are included in this repository to enable easy deployment.
+1. Create a Supabase account at https://supabase.com/
+2. Create a new project and note down your project URL and API key (do not use the example credentials provided in the .env file)
+3. Update the .env file with your actual Supabase credentials:
+   ```
+   SUPABASE_URL=your-project-name.supabase.co
+   SUPABASE_KEY=your-anon-or-service-key
+   DATABASE_URL=postgresql://postgres:your_password@your_project_id.supabase.co:5432/postgres
+   ```
+4. Create the database table using Supabase SQL Editor:
+
+   - Go to your Supabase dashboard
+   - Navigate to "SQL Editor"
+   - Copy and run the SQL commands from the `supabase_table_schema.sql` file
+   - This will create the products table with the pgvector extension and necessary indexes
+
+5. Verify the setup by running the verification script:
+
+```bash
+python scripts/setup_db.py
+```
+
+6. Build the product index in Supabase (after table is created):
+
+```bash
+python scripts/build_index_db.py
+```
+
+**Note**: If you see an error like "could not translate host name" when running the verification or build scripts, it means the example credentials in `.env` have been replaced with your own Supabase project credentials. This is expected behavior when using the default template credentials.
 
 ## Usage
-
-1. Upload an image of a product you're interested in
-2. Click "Find Similar Products" to search for matches
-3. Browse the results with similarity scores
-4. Explore different product categories using the sidebar filters
-
-## How to Run Locally
 
 1. Clone the repository:
 
@@ -56,11 +80,7 @@ This application is designed for deployment on Streamlit Cloud. The required fil
    cd visual-product-matcher
    ```
 
-2. Install dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Set up the database as described above
 
 3. Run the application:
    ```bash
@@ -73,4 +93,4 @@ The application is deployed on Streamlit Cloud and can be accessed at: https://v
 
 ## Approach
 
-This visual product matcher uses a pre-trained ResNet50 model to extract image features and FAISS for efficient similarity search. Images are converted to feature vectors, stored in an index, and searched using cosine similarity. The Streamlit interface allows users to upload images and find visually similar products from the database. Key challenges included handling image paths across platforms and optimizing for cloud deployment, solved by normalizing file paths and properly loading images before display.
+This visual product matcher uses a pre-trained Vision Transformer (ViT) model to extract 768-dimensional image features and Supabase PostgreSQL with the pgvector extension and HNSW indexing for efficient similarity search. Images are converted to feature vectors, stored in the database along with their URLs, and searched using cosine similarity. The application uses the Supabase Python client for database operations with direct PostgreSQL connections for vector operations. The Streamlit interface allows users to upload images and find visually similar products from the database. Key improvements include migrating from a local file system to Supabase for better scalability, deployment compatibility, and remote access.
