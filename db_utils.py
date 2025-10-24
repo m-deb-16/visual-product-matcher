@@ -1,14 +1,11 @@
 import os
+import streamlit as st
 import torch
 import numpy as np
 from PIL import Image
-from dotenv import load_dotenv
 from supabase import create_client, Client
 from transformers import ViTModel, ViTImageProcessor
 import ast
-
-# Load environment variables
-load_dotenv()
 
 # -----------------------------
 # IMAGE PREPROCESSING PIPELINE (for ViT)
@@ -47,8 +44,8 @@ def extract_features(image: Image.Image, model: ViTFeatureExtractor):
 # SUPABASE CLIENT
 # -----------------------------
 def get_supabase_client() -> Client:
-    url = os.getenv('SUPABASE_URL')
-    key = os.getenv('SUPABASE_KEY')
+    url = st.secrets['SUPABASE_URL']
+    key = st.secrets['SUPABASE_KEY']
     return create_client(url, key)
 
 # -----------------------------

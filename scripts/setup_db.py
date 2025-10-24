@@ -1,13 +1,11 @@
 import os
+import streamlit as st
 from supabase import create_client, Client
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def verify_table_exists():
     """Verify that the products table exists in Supabase"""
-    supabase_url = os.getenv('SUPABASE_URL').strip()
-    supabase_key = os.getenv('SUPABASE_KEY').strip()
+    supabase_url = st.secrets['SUPABASE_URL'].strip()
+    supabase_key = st.secrets['SUPABASE_KEY'].strip()
     
     if not supabase_url or not supabase_key:
         print("❌ Supabase URL or key not found in environment variables!")

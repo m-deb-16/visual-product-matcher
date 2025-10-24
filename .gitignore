@@ -34,9 +34,9 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
-
 # Streamlit
-.streamlit/secrets.toml
+# Note: secrets.toml is intentionally NOT ignored to work with Streamlit Cloud deployment
+
 
 # Exclude general data files but keep our project data
 *.csv
@@ -55,3 +55,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+.env
+

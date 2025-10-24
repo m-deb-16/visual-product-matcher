@@ -1,25 +1,21 @@
 import os
+import streamlit as st
 import pandas as pd
 import torch
 import numpy as np
 from PIL import Image
-from dotenv import load_dotenv
 from io import BytesIO
 import requests
 from supabase import create_client, Client
 from transformers import ViTModel, ViTImageProcessor
 
 # -----------------------------
-# LOAD ENV
-# -----------------------------
-load_dotenv()
-SUPABASE_URL = os.getenv("SUPABASE_URL").strip()
-SUPABASE_KEY = os.getenv("SUPABASE_KEY").strip()
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-# -----------------------------
 # CONFIG
 # -----------------------------
+SUPABASE_URL = st.secrets["SUPABASE_URL"].strip()
+SUPABASE_KEY = st.secrets["SUPABASE_KEY"].strip()
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
 DATA_DIR = "data"
 CSV_PATH = os.path.join(DATA_DIR, "products.csv")
 

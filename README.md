@@ -37,19 +37,19 @@ Visual Product Matcher is an AI-powered application that helps users find visual
 - supabase-py
 - psycopg2-binary (for vector operations)
 - pgvector
-- python-dotenv
 - Other dependencies listed in requirements_db.txt
 
 ## Database Setup
 
 1. Create a Supabase account at https://supabase.com/
-2. Create a new project and note down your project URL and API key (do not use the example credentials provided in the .env file)
-3. Update the .env file with your actual Supabase credentials:
+2. Create a new project and note down your project URL and API key
+3. For local development, create a .streamlit/secrets.toml file in your project root with your Supabase credentials:
    ```
-   SUPABASE_URL=your-project-name.supabase.co
-   SUPABASE_KEY=your-anon-or-service-key
-   DATABASE_URL=postgresql://postgres:your_password@your_project_id.supabase.co:5432/postgres
+   SUPABASE_URL="your-project-name.supabase.co"
+   SUPABASE_KEY="your-anon-or-service-key"
+   DATABASE_URL="postgresql://postgres:your_password@your_project_id.supabase.co:5432/postgres"
    ```
+   For Streamlit Cloud deployment, add these as secrets in your app settings instead of using a local file.
 4. Create the database table using Supabase SQL Editor:
 
    - Go to your Supabase dashboard
@@ -68,8 +68,6 @@ python scripts/setup_db.py
 ```bash
 python scripts/build_index_db.py
 ```
-
-**Note**: If you see an error like "could not translate host name" when running the verification or build scripts, it means the example credentials in `.env` have been replaced with your own Supabase project credentials. This is expected behavior when using the default template credentials.
 
 ## Usage
 
